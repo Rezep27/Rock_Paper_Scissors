@@ -2,8 +2,7 @@ let humanScore = 0;
 let computerScore = 0;
 
 function getHumanChoice(){
-    console.log("Insert one of the following values: Rock, paper, scissors: ")
-    let userInput = prompt();
+    let userInput = prompt("Insert one of the following values: Rock, paper, scissors: ");
     let fixedInput = userInput.toLowerCase().trim();
     result = verifyHumanChoice(fixedInput);
 
