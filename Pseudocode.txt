@@ -1,0 +1,85 @@
+## This file will contain the pseudocode that will be used for the code
+
+SET humanScore to 0
+SET computerScore to 0
+
+DEFINE FUNCTION getHumanChoice
+   PRINT a prompt for the user to insert one of the following values "Rock, paper, scissors".
+   READ the user's input
+   SET a variable userInput value to the value of the the input read
+   COMPUTE the userInput variable and strip the blank characters from it and set all its charactes to upperCase
+   SET the variable fixedUserInput to the previously computed value
+   SET result CALL verifyHumanChoice(fixedUserInput)
+   IF result is 0 THEN
+      PRINT The value you entered is not among the available options, please try again.
+      SET result to CALL getHumanChoice
+   ENDIF 
+   RETURN result
+ENDFUNCTION
+
+
+DEFINE FUNCTION vefifyHumanChoice PARAMETERS (humanChoice)
+   CASE humanChoice OF
+      rock: RETURN 1
+      paper: RETURN 2
+      scissors: RETURN 3
+      OTHERS: RETURN 0
+   ENDCASE
+ENDFUNCTION
+
+DEFINE FUNCTION getComputerChoice
+   SET choice variable with value CALCULATE random number between 0 and 1
+   IF choice < 0.33 THEN
+      RETURN 1
+   ELSE IF choice < 0.66 THEN
+      RETURN 2
+   ELSE 
+      RETURN 3
+   ENDIF
+ENDFUNCTION
+
+DEFINE FUNCTION numberToChoice PARAMETERS (number)
+   CASE number OF
+      1: RETURN "Rock"
+      2: RETURN "Paper"
+      3: RETURN "Scissors"
+      OTHERS: RETURN "Choice not on range"
+   ENDCASE
+ENDFUNCTION
+   
+DEFINE FUNCTION playRound PARAMETERS (humanChoice, computerChoice)
+   SET humanMove to CALL numberToChoice(humanChoice)
+   SET computerMove to CALL numberToChoice(computerChoice)
+   IF humanChoice is equal to computerChoice THEN
+      PRINT "It is a tie! Both players chose" CONCATENATE WITH humanMove
+      RETURN
+   ELSE IF computerChoice minus humanChoice equals 1 or computerChoice minus humanChoice equals -2 THEN
+      PRINT "You win this round! " CONCATENATE humanMove CONCATENATE " beats " CONCATENATE computerMove
+      ADD 1 to humanScore
+   ELSE 
+      PRINT "You lose this round! " CONCATENATE computerMove CONCATENATE " beats " CONCATENATE humanMove
+      ADD 1 to computerScore
+   ENDIF
+ENDFUNCTION
+
+DEFINE FUNCTION displayWinner
+   IF humanScore is greater than computerScore THEN
+      PRINT "You win with a score of " CONCATENATE humanScore CONCATENATE " points"
+   ELSE 
+      PRINT "You lose with a score of " CONCATENATE humanScore CONCATENATE " points"
+   ENDIF
+ENDFUNCTION
+
+DEFINE FUNCTION playGame
+   FOR i = 0; i < 5; i++
+      SET playerChoice = getHumanChoice()
+      SET computerChoice = getComputerChoice()
+      CALL playRound(playerChoice, computerChoice)
+   ENDFOR
+   CALL displayWinner()
+ENDFUNCTION
+  
+CALL playGame()
+   
+
+
